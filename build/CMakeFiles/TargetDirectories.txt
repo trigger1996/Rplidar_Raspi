@@ -1,0 +1,3 @@
+/home/pi/src/projects/00_Rplidar/build/CMakeFiles/rebuild_cache.dir
+/home/pi/src/projects/00_Rplidar/build/CMakeFiles/edit_cache.dir
+/home/pi/src/projects/00_Rplidar/build/CMakeFiles/Rplidar.dir
