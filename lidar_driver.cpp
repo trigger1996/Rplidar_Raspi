@@ -14,7 +14,7 @@ int __lidar_driver::init() {
         // use default com port
         opt_com_path = "\\\\.\\com3";
 #else
-        opt_com_path = "/dev/ttyUSB2";
+        opt_com_path = "/dev/ttyUSB1";
 #endif
     }
 

@@ -21,13 +21,14 @@ int main(int argc, char **argv) {
     lidar = new __lidar_driver;
     lidar->init();
 
-    __icp *_icp;
-    _icp = new __icp;
+    __icp *_icp_local, *_icp_global;
+    _icp_local  = new __icp;
+    _icp_global = new __icp;
 
     map_laser = new GridMapping(0, 2.2, -2.2, 200, 0.5, 13500, 0, 0);		// 0, 2.2, -2.2, 200, 0.5, 15000, 0
 
     stat = __SUCCEEDED;
-    i = 1;
+    i = 0;
 
     vector<__scandot> data, data_last;
     Mat dst;
@@ -40,21 +41,30 @@ int main(int argc, char **argv) {
 
             data_last = data;
             data = lidar->laserData;
-            _icp->set_Pts_To(data_last);
-            _icp->set_Pts_Ref(data);
-            _icp->run();
-            _icp->draw_DataResult(LidarImageScale, 0.5);
+            _icp_local->set_Pts_To(data_last);
+            _icp_local->set_Pts_Ref(data);
+            _icp_local->run();
+            //_icp_local->draw_DataResult(LidarImageScale, 0.5);
 
-            x_esti += _icp->dx;
-            y_esti += _icp->dy;
-            yaw_esti += _icp->d_yaw;
-            cout << "dx " << _icp->dx << "\t dy " << _icp->dy << "\t x: " << x_esti << "\t y: " << y_esti << "\t yaw: " << yaw_esti << endl;        // mm
+            x_esti += _icp_local->dx;
+            y_esti += _icp_local->dy;
+            yaw_esti += _icp_local->d_yaw;
+            cout << "dx " << _icp_local->dx << "\t dy " << _icp_local->dy <<
+                    "\t x: " << x_esti << "\t y: " << y_esti << "\t yaw: " << yaw_esti << endl;        // mm
+
+            if (i <= 10) {
+                _icp_global->set_Pts_Ref(data);
+            }
+            _icp_global->set_Pts_To(data);
+            _icp_global->run();
+            _icp_global->draw_DataResult(LidarImageScale, 0.5);
+            _icp_global->draw_DataResult(LidarImageScale, 0.5);
 
             draw(dst, data, data_last);
             imshow("data", dst);
+            i++;
         }
 
-        i++;
         waitKey(30);
     }
     waitKey(0);
