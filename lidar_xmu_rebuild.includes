@@ -1,0 +1,14 @@
+include
+lidar_sdk/include
+lidar_sdk/src
+lidar_sdk/src/arch/linux
+lidar_sdk/src/arch/macOS
+lidar_sdk/src/arch/win32
+lidar_sdk/src/hal
+.
+icp_opencv/third_party/kdtree
+build/CMakeFiles/3.10.2/CompilerIdC
+icp_opencv/third_party
+build/CMakeFiles/3.10.2/CompilerIdCXX
+build/CMakeFiles
+icp_opencv/icp-opencv
